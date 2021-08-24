@@ -51,10 +51,19 @@ export function ProductCard() {
   const [products, setProducts] = useState(null);
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
-  console.log(products);
+  console.log(data);
   useEffect(() => {
     if (data?.products) setProducts(data.products);
   }, [data]);
+
+  useEffect(() => {
+    if (products)
+      console.log(
+        products.filter((product) =>
+          product.name.toLowerCase().includes("rustic")
+        )
+      );
+  }, [products]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -96,56 +105,3 @@ export function ProductCard() {
     </Grid>
   );
 }
-
-{
-  /* <Grid container justifyContent="center" spacing={spacing}>
-  {data.products.map((product) => (
-    <Grid key={product.id} item>
-      <Card className={classes.root}>
-        <CardMedia
-          className={classes.media}
-          image={product.image}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.name}
-          </Typography>
-        </CardContent>
-        <div className={classes.actionCard}>
-          <Typography> Price: {product.price}</Typography>
-          <Button size="small" variant="contained" color="primary">
-            add to basket
-          </Button>
-        </div>
-      </Card>
-    </Grid>
-  ))}
-</Grid>; */
-}
-
-// return (
-//     <>
-//       {data.products.map((product) => (
-//         <Card className={classes.root} key={product.id}>
-//           <CardMedia
-//             className={classes.media}
-//             image={product.image}
-//             title="Contemplative Reptile"
-//           />
-//           <CardContent>
-//             <Typography gutterBottom variant="h5" component="h2">
-//               {product.name}
-//             </Typography>
-//           </CardContent>
-//           <div className={classes.actionCard}>
-//             <Typography> Price: {product.price}</Typography>
-//             <Button size="small" variant="contained" color="primary">
-//               add to basket
-//             </Button>
-//           </div>
-//         </Card>
-//       ))}
-//     </>
-//   );
-// }
