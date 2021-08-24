@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   root: {
     width: 250,
-    height: 280,
+    height: 260,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   actionCard: {
     display: "flex",
     justifyContent: "space-around",
-    margin: "10px 0px",
+    margin: "15px 0px",
     alignItems: "center",
   },
 });
@@ -71,7 +71,7 @@ export function ProductCard() {
                 title="Contemplative Reptile"
               />
               <CardContent>
-                <Typography gutterBottom variant="h7" component="h2">
+                <Typography gutterBottom variant="subtitle1" component="h2">
                   {product.name}
                 </Typography>
               </CardContent>
