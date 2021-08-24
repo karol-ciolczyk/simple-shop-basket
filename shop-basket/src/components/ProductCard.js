@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -48,8 +48,13 @@ const useStyles = makeStyles({
 export function ProductCard() {
   const classes = useStyles();
 
+  const [products, setProducts] = useState(null);
   const { loading, error, data } = useQuery(GET_PRODUCTS);
-  console.log(data);
+
+  console.log(products);
+  useEffect(() => {
+    if (data?.products) setProducts(data.products);
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -61,32 +66,33 @@ export function ProductCard() {
       spacing={2}
       className={classes.container}
     >
-      {data.products.map((product) => (
-        <Grid key={product.id} item>
-          <Card className={classes.root}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={product.image}
-                title="Contemplative Reptile"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="subtitle1" component="h2">
-                  {product.name}
+      {products &&
+        products.map((product) => (
+          <Grid key={product.id} item>
+            <Card className={classes.root}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image={product.image}
+                  title="Contemplative Reptile"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="subtitle1" component="h2">
+                    {product.name}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <div className={classes.actionCard}>
+                <Typography variant="subtitle2">
+                  Price: {product.price}
                 </Typography>
-              </CardContent>
-            </CardActionArea>
-            <div className={classes.actionCard}>
-              <Typography variant="subtitle2">
-                Price: {product.price}
-              </Typography>
-              <Button size="small" variant="contained" color="primary">
-                add to basket
-              </Button>
-            </div>
-          </Card>
-        </Grid>
-      ))}
+                <Button size="small" variant="contained" color="primary">
+                  add to basket
+                </Button>
+              </div>
+            </Card>
+          </Grid>
+        ))}
     </Grid>
   );
 }
